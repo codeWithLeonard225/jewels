@@ -102,8 +102,17 @@ useEffect(() => {
         await localforage.setItem(`pupils_${schoolId}_${academicYear}`, pupilsData);
         
         const classPupils = pupilsData
-          .filter(p => p.class === selectedClass)
-          .sort((a, b) => a.studentName?.localeCompare(b.studentName));
+  .filter(p => p.class === selectedClass)
+  .sort((a, b) =>
+    (a.studentName || "")
+      .trim()
+      .toLowerCase()
+      .localeCompare(
+        (b.studentName || "")
+          .trim()
+          .toLowerCase()
+      )
+  );
         setPupils(classPupils);
         
         const initialGrades = {};
